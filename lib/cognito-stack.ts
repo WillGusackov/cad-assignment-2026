@@ -49,11 +49,7 @@ export class CognitoStack extends cdk.Stack {
       });
 
     // POST /auth/<path>
-    const routes: [string, string, string][] = [
-      ['signup', 'SignupFn', 'signup.ts'],
-      ['confirm_signup', 'ConfirmSignupFn', 'confirm-signup.ts'],
-      ['signin', 'SigninFn', 'signin.ts'],
-      ['signout', 'SignoutFn', 'signout.ts'],
+          
     ];
     for (const [path, name, entry] of routes) {
       authResource
