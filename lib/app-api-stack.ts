@@ -95,7 +95,7 @@ export class AppApiStack extends cdk.Stack {
     const moviesResource = api.root.addResource('movies');
 
     const movieRolesResource = moviesResource.addResource('{movieID}').addResource('roles');
-    movieRolesResource.addMethod('GET', new apig.LambdaIntegration(getMovieRolesFn) );
+    movieRolesResource.addMethod('GET', new apig.LambdaIntegration(getMovieRolesFn), userAuth);
 
     api.root
       .addResource('actors')
@@ -103,3 +103,4 @@ export class AppApiStack extends cdk.Stack {
       .addMethod('GET', new apig.LambdaIntegration(getActorFn), userAuth);
   }
 }
+
