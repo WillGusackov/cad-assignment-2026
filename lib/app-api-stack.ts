@@ -100,7 +100,7 @@ export class AppApiStack extends cdk.Stack {
 
     moviesResource
     .addResource('roles')
-    .addMethod('POST', new apig.LambdaIntegration(addMovieRoleFn)); //post
+    .addMethod('POST', new apig.LambdaIntegration(addMovieRoleFn), { apiKeyRequired: true }); //post
 
     api.root
       .addResource('actors')
