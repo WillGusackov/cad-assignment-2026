@@ -10,6 +10,19 @@ export const handler = async (
   const body = parseJsonObject(event);
   if (isResponse(body)) return body;
 
+
+  // Validate the request body, if movieId is not a number returns a 400 response with an error message, same concept for all.
+  if (typeof body.movieId !== "number" ||
+    typeof body.actorId !== "number" ||
+    typeof body.roleName !== "string" ||
+    typeof body.roleDescription !== "string"
+  ) {
+    return response(400, {
+      message:
+        "Invalid request body. Required fields: movieId (number), actorId (number), roleName (string), roleDescription (string)",
+    });
+  }
+
   const role: Role = {
     movieId: body.movieId as number,
     actorId: body.actorId as number,
@@ -18,7 +31,7 @@ export const handler = async (
   };
 
   try {
-    //  TOD∏O - Add role if its IDs are valid
+    //Add role if its IDs are valid
     const movieResult = await ddb.send(
       new GetCommand({
         TableName: tableName,
