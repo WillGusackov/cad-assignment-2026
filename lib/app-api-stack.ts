@@ -88,6 +88,14 @@ export class AppApiStack extends cdk.Stack {
       },
     });
 
+    const apiKey = api.addApiKey('AdminApiKey');
+    const apiUsagePlan = api.addUsagePlan('AdminUsagePlan', {
+      name: 'AdminUsagePlan',
+      throttle: { rateLimit: 10, burstLimit: 2 },
+    });
+    apiUsagePlan.addApiKey(apiKey);
+    apiUsagePlan.addApiStage({ stage: api.deploymentStage });
+
     const userAuth: apig.MethodOptions = {
       authorizer: userAuthorizer,
       authorizationType: apig.AuthorizationType.CUSTOM,
@@ -106,6 +114,12 @@ export class AppApiStack extends cdk.Stack {
       .addResource('actors')
       .addResource('{actorID}')
       .addMethod('GET', new apig.LambdaIntegration(getActorFn), userAuth);
+  
+  
+    new cdk.CfnOutput(this, 'ApiKeyId', { value: apiKey.keyId });
   }
+
 }
+
+
 
