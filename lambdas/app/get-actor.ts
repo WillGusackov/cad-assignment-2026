@@ -57,6 +57,6 @@ export const handler = async (
     return response(200, { data: { ...actor, roleDescription } });
   } catch (err) {
     console.error("DynamoDB error:", err);
-    return response(500, { message: "Internal server error", error: err });
+    return response(500, { message: "Internal server error"});
   }
 };
